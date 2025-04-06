@@ -1,7 +1,7 @@
 {
-  "name": "flatpickr",
-  "version": "4.6.13",
-  "description": "A lightweight, powerful javascript datetime picker",
+  "name": "flatpickr-jalali-support",
+  "version": "1.0.3",
+  "description": "A lightweight, powerful javascript datetime picker with Jalali date support",
   "scripts": {
     "build": "run-s build:pre build:build build:esm build:types build:post",
     "build:pre": "rimraf dist",
@@ -29,10 +29,11 @@
     "@types/jquery": "^3.5.5",
     "@types/node": "^14.14.14",
     "@types/stylus": "^0.48.33",
-    "autoprefixer-stylus": "latest",
+    "autoprefixer-stylus": "^0.6.0",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "chokidar": "^3.4.3",
     "coveralls": "^3.1.0",
+    "cpy-cli": "^5.0.0",
     "fs-extra": "^9.0.1",
     "glob": "^7.1.6",
     "jest": "^27.5.1",
@@ -57,13 +58,10 @@
   "types": "./dist/typings.d.ts",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/chmln/flatpickr.git"
+    "url": "git+https://github.com/Mobinkh/flatpickr.git"
   },
-  "author": "Gregory <gregory.mkv@gmail.com>",
+  "author": "Mobin.kh <mobin.khorushi@gmail.com>",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/chmln/flatpickr/issues"
-  },
   "homepage": "https://flatpickr.js.org",
   "keywords": [
     "javascript",

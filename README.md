@@ -14,6 +14,8 @@
 ![default](https://cloud.githubusercontent.com/assets/11352152/14549370/3cadb750-028d-11e6-818d-c6a1bc6349fc.PNG)
 ![dark](https://cloud.githubusercontent.com/assets/11352152/14549372/3cbc8514-028d-11e6-8daf-ec1ba01c9d7e.PNG)
 
+## Notice
+This version is highly copied from the original version with 1 extra future of support for jalali date and perfectly fine fa.js language + updated dependencies to fix some vulnerabilities
 
 ## Motivation
 Almost every large SPA or project involves date and time input. Browser's native implementations of those are inconsistent and limited in functionality. Most other libraries require you to pull in heavy dependencies like jQuery, Bootstrap, and moment.js. I wanted something that was good-looking out of the box, dependency-free, powerful, and extensible.
@@ -42,6 +44,8 @@ flatpickr provides more functionality at a fraction of the size of other librari
 IE9 and up, Edge, iOS Safari 6+, Chrome 8+, Firefox 6+
 
 ## Install & Use
+
+> npm install flatpickr-jalali-support
 
 Demos and documentation: https://flatpickr.js.org
 
