@@ -1,12 +1,12 @@
 import * as fs from "fs-extra";
 import { exec as execCommand } from "child_process";
 
-import glob from "glob";
+import { glob } from "glob"
 
 import terser from "terser";
 import chokidar from "chokidar";
+import type { FSWatcher } from "chokidar";
 import stylus from "stylus";
-import stylusAutoprefixer from "autoprefixer-stylus";
 
 import * as rollup from "rollup";
 
@@ -29,41 +29,38 @@ const customModuleNames: Record<string, string> = {
   confirmDate: "confirmDatePlugin",
 };
 
-const watchers: chokidar.FSWatcher[] = [];
+const watchers: FSWatcher[] = [];
 
 function logErr(e: Error | string) {
   console.error(e);
 }
 
-function resolveGlob(g: string) {
-  return new Promise<string[]>((resolve, reject) => {
-    glob(g, (err: Error | null, files: string[]) =>
-      err ? reject(err) : resolve(files)
-    );
-  });
+async function resolveGlob(g: string): Promise<string[]> {
+  return await glob(g);
 }
 
 async function readFileAsync(path: string): Promise<string> {
   try {
     const buf = await fs.readFile(path);
     return buf.toString();
-  } catch (e) {
-    logErr(e);
-    return e.toString();
+  } catch (e: unknown) {
+    logErr(e instanceof Error ? e : new Error(String(e)));
+    return e instanceof Error ? e.message : String(e);
   }
 }
 
 async function uglify(src: string) {
   try {
-    const { code } = await terser.minify(src, {
+    const result =  await terser.minify(src, {
       output: {
         preamble: version,
         comments: false,
       },
     });
-    return code;
+    return result.code || "";
   } catch (err) {
-    logErr(err);
+    logErr(err instanceof Error ? err : new Error(String(err)));
+    return "";
   }
 }
 
@@ -76,9 +73,9 @@ async function buildScripts() {
   try {
     await buildFlatpickrJs();
     const transpiled = await readFileAsync("./dist/flatpickr.js");
-    fs.writeFile("./dist/flatpickr.min.js", await uglify(transpiled));
+    await fs.writeFile("./dist/flatpickr.min.js", await uglify(transpiled));
   } catch (e) {
-    logErr(e);
+    logErr(e instanceof Error ? e : new Error(String(e)));
   }
 }
 
@@ -126,7 +123,7 @@ function buildExtras(folder: "plugins" | "l10n") {
         ...(cssPaths.map((p) => fs.copy(p, p.replace("src", "dist"))) as any),
       ]);
     } catch (err) {
-      logErr(err);
+      logErr(err instanceof Error ? err : new Error(String(err)));
     }
   };
 }
@@ -138,7 +135,6 @@ async function transpileStyle(src: string, compress = false) {
     } as any)
       .include(`${__dirname}/src/style`)
       .include(`${__dirname}/src/style/themes`)
-      .use(stylusAutoprefixer())
       .render((err, css) => (!err ? resolve(css) : reject(err)));
   });
 }
@@ -156,7 +152,7 @@ async function buildStyle() {
       fs.writeFile("./dist/ie.css", await transpileStyle(srcIE)),
     ]);
   } catch (e) {
-    logErr(e);
+    logErr(e instanceof Error ? e : new Error(String(e)));
   }
 }
 
@@ -177,7 +173,7 @@ async function buildThemes() {
       })
     );
   } catch (err) {
-    logErr(err);
+    logErr(err instanceof Error ? err : new Error(String(err)));
   }
   return;
 }
@@ -206,7 +202,7 @@ function watch(path: string, cb: (path: string) => void) {
         //usePolling: true,
       })
       .on("change", cb)
-      .on("error", logErr)
+      .on("error", (err) => logErr(err instanceof Error ? err : new Error(String(err))))
   );
 }
 

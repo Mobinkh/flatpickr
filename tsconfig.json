@@ -2,17 +2,23 @@
   "compilerOptions": {
     "strict": true,
     "noImplicitAny": true,
-    "target": "es5",
+    "target": "es2015",                             // CHANGED from "es5"
     "module": "commonjs",
     "moduleResolution": "node",
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "removeComments": true,
-    "lib": ["es2015", "dom", "es2017.object", "esnext.asynciterable"],
+    "lib": [
+      "es2015",
+      "dom",
+      "es2017.object",
+      "esnext.asynciterable"
+    ],
     "baseUrl": "src",
     "resolveJsonModule": true,
     "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": true,
+    "skipLibCheck": true                           // ADDED: to skip problematic node_modules typings
   },
   "exclude": ["./dist"]
 }

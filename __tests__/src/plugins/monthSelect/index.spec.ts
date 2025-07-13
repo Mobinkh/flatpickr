@@ -255,7 +255,7 @@ describe("monthSelect", () => {
 
             it("clears the highlighting", () => {
               getMonthCells().forEach((cell) => {
-                expect(cell.classList).not.toContain("startRange");
+                expect(Array.from(cell.classList)).not.toContain("startRange");
                 expect(cell.classList).not.toContain("inRange");
                 expect(cell.classList).not.toContain("endRange");
               });
@@ -270,7 +270,7 @@ describe("monthSelect", () => {
 
             it("clears the highlighting", () => {
               getMonthCells().forEach((cell) => {
-                expect(cell.classList).not.toContain("startRange");
+                expect(Array.from(cell.classList)).not.toContain("startRange");
                 expect(cell.classList).not.toContain("inRange");
                 expect(cell.classList).not.toContain("endRange");
               });
@@ -326,7 +326,7 @@ describe("monthSelect", () => {
             ...Array.from(getMonthCells()).slice(0, 3),
             ...Array.from(getMonthCells()).slice(4),
           ].forEach((cell) => {
-            expect(cell.classList).not.toContain("startRange");
+            expect(Array.from(cell.classList)).not.toContain("startRange");
             expect(cell.classList).not.toContain("inRange");
             expect(cell.classList).not.toContain("endRange");
           });

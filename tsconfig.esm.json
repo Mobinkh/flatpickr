@@ -1,10 +1,10 @@
 {
-    "extends": "./tsconfig",
-    "include": ["src"],
-    "compilerOptions": {
-        "incremental": true,
-        "target": "es5",
-        "module": "es2015",
-        "outDir": "dist/esm"
-    }
+  "extends": "./tsconfig.json",
+  "include": ["src"],
+  "compilerOptions": {
+    "incremental": true,
+    "target": "es2015",              // CHANGED from es5 to support #private
+    "module": "esnext",              // UPDATED: es2015 is fine, but esnext is cleaner with rollup
+    "outDir": "dist/esm"
+  }
 }

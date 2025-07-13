@@ -516,10 +516,11 @@ function FlatpickrInstance(
         self.currentYear = jumpTo.getFullYear();
         self.currentMonth = jumpTo.getMonth();
       }
-    } catch (e) {
+    } catch (e: unknown) {
       /* istanbul ignore next */
-      e.message = "Invalid date supplied: " + jumpTo;
-      self.config.errorHandler(e);
+      const err = e instanceof Error ? e : new Error(String(e));
+      err.message = "Invalid date supplied: " + jumpTo;
+      self.config.errorHandler(err);
     }
 
     if (triggerChange && self.currentYear !== oldYear) {
@@ -1235,9 +1236,11 @@ function FlatpickrInstance(
         "flatpickr-am-pm",
         self.l10n.amPM[
           int(
-            (self.latestSelectedDateObj
-              ? self.hourElement.value
-              : self.config.defaultHour) > 11
+            (
+              self.latestSelectedDateObj
+                ? parseInt(self.hourElement.value, 10)
+                : self.config.defaultHour
+            ) > 11
           )
         ]
       );
@@ -2320,7 +2323,7 @@ function FlatpickrInstance(
 
     if (
       window.navigator.userAgent.indexOf("MSIE") !== -1 ||
-      navigator.msMaxTouchPoints !== undefined
+      "msMaxTouchPoints" in navigator && (navigator as any).msMaxTouchPoints !== undefined
     ) {
       // hack - bugs in the way IE handles focus keeps the calendar open
       setTimeout(self.close, 0);

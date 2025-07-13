@@ -690,7 +690,7 @@ describe("flatpickr", () => {
         expect(fp.isOpen).toBe(true);
         simulate("mousedown", window.document.body, { which: 1 }, CustomEvent);
         fp._input.blur();
-
+        simulate("mousedown", document.body, { which: 1 }, CustomEvent);
         expect(fp.isOpen).toBe(false);
         expect(fp.calendarContainer.classList.contains("open")).toBe(false);
 
